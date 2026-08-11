@@ -1,5 +1,6 @@
 package io.github.jason13official.happy_ghasts_boost.impl.common;
 
+import com.electronwill.nightconfig.core.UnmodifiableConfig;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import io.github.jason13official.happy_ghasts_boost.Constants;
 import io.github.jason13official.happy_ghasts_boost.platform.Services;
@@ -66,6 +67,12 @@ public class EarlyLoadConfig implements IMixinConfigPlugin {
 
   }
 
+  private static float getFloatOrElse(UnmodifiableConfig config, String key, float defaultValue) {
+
+    Number value = config.get(key);
+    return value == null ? defaultValue : value.floatValue();
+  }
+
   public static void createOrLoadConfiguration() {
 
     Path configDir = Services.PLATFORM.getConfigDirectory();
@@ -87,11 +94,11 @@ public class EarlyLoadConfig implements IMixinConfigPlugin {
       }
 
       // getters (from serverConfig)
-      SECONDS_UNTIL_BOOST.set(serverConfig.getOrElse(SECONDS_UNTIL_BOOST.key(), SECONDS_UNTIL_BOOST.get()));
+      SECONDS_UNTIL_BOOST.set(serverConfig.getIntOrElse(SECONDS_UNTIL_BOOST.key(), SECONDS_UNTIL_BOOST.get()));
 
-      FORWARD_MULTIPLIER.set(serverConfig.getOrElse(FORWARD_MULTIPLIER.key(), FORWARD_MULTIPLIER.get()));
-      POTION_MULTIPLIER.set(serverConfig.getOrElse(POTION_MULTIPLIER.key(), POTION_MULTIPLIER.get()));
-      POTION_MULTIPLIER_TWO.set(serverConfig.getOrElse(POTION_MULTIPLIER_TWO.key(), POTION_MULTIPLIER_TWO.get()));
+      FORWARD_MULTIPLIER.set(getFloatOrElse(serverConfig, FORWARD_MULTIPLIER.key(), FORWARD_MULTIPLIER.get()));
+      POTION_MULTIPLIER.set(getFloatOrElse(serverConfig, POTION_MULTIPLIER.key(), POTION_MULTIPLIER.get()));
+      POTION_MULTIPLIER_TWO.set(getFloatOrElse(serverConfig, POTION_MULTIPLIER_TWO.key(), POTION_MULTIPLIER_TWO.get()));
 
       // setters (to serverConfig)
       serverConfig.setComment(SECONDS_UNTIL_BOOST.key(), SECONDS_UNTIL_BOOST.comment());

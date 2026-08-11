@@ -2,6 +2,7 @@ package io.github.jason13official.happy_ghasts_boost.platform;
 
 import io.github.jason13official.happy_ghasts_boost.platform.services.IPlatformHelper;
 import java.nio.file.Path;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.item.CreativeModeTab.Builder;
@@ -33,8 +34,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
   }
 
   @Override
-  public Builder tabBuilder() {
+  public boolean isClientSide() {
 
-    return FabricCreativeModeTab.builder();
+    return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
   }
 }

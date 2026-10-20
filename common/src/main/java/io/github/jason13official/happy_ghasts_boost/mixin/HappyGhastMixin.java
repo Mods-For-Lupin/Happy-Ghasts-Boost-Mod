@@ -3,6 +3,7 @@ package io.github.jason13official.happy_ghasts_boost.mixin;
 import com.blackgear.vanillabackport.common.level.entities.mob.animal.happy_ghast.HappyGhast;
 import io.github.jason13official.happy_ghasts_boost.api.common.IHappyGhastBoostDataHolder;
 import io.github.jason13official.happy_ghasts_boost.impl.common.EarlyLoadConfig;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +26,7 @@ public class HappyGhastMixin implements IHappyGhastBoostDataHolder {
 
     HappyGhast ghast = (HappyGhast) (Object) this;
     if (ghast.getControllingPassenger() == null) {
+      happy_ghasts_boost$resetTrackedValues();
       return;
     } // the ghast has a passenger
 
@@ -32,17 +34,13 @@ public class HappyGhastMixin implements IHappyGhastBoostDataHolder {
     Vec3 movement = ghast.getDeltaMovement();
     Vec3 forward = ghast.getForward();
 
-    // normalized
-    Vec3 movementNormal = movement.normalize();
-    Vec3 forwardNormal = forward.normalize();
-
-    boolean movingForward = happy_ghasts_boost$withinFivePercentMargin(movementNormal.x, forwardNormal.x) && happy_ghasts_boost$withinFivePercentMargin(movementNormal.z, forwardNormal.z);
+    boolean movingForward = happy_ghasts_boost$isMovingForward(movement, forward);
     boolean velocityCheck = happy_ghasts_boost$checkThreshold(movement.x, movement.z);
 
     if (movingForward && velocityCheck) {
 
       float currentYDegrees = ghast.getVisualRotationYInDegrees();
-      boolean turnedTooFar = !happy_ghasts_boost$withinFivePercentMargin(currentYDegrees, happy_ghasts_boost$oldYDegrees);
+      boolean turnedTooFar = Mth.degreesDifferenceAbs(currentYDegrees, happy_ghasts_boost$oldYDegrees) > 5.0F;
 
       if (turnedTooFar) {
         happy_ghasts_boost$resetTrackedValues();
@@ -62,6 +60,11 @@ public class HappyGhastMixin implements IHappyGhastBoostDataHolder {
 
     // track for oversteering
     happy_ghasts_boost$oldYDegrees = ghast.getVisualRotationYInDegrees();
+
+    if (happy_ghasts_boost$boosted && ghast.level().isClientSide()) {
+      Vec3 pos = ghast.position();
+      ghast.level().addParticle(ParticleTypes.POOF, pos.x, pos.y, pos.z, 0.1, 0.1, 0.1);
+    }
   }
 
   @Override
@@ -81,11 +84,16 @@ public class HappyGhastMixin implements IHappyGhastBoostDataHolder {
   }
 
   @Unique
-  private static boolean happy_ghasts_boost$withinFivePercentMargin(double a, double b) {
+  private static boolean happy_ghasts_boost$isMovingForward(Vec3 movement, Vec3 forward) {
 
-    double c = Math.abs(a - b) / a;
+    Vec3 horizontalMovement = new Vec3(movement.x, 0.0D, movement.z);
+    Vec3 horizontalForward = new Vec3(forward.x, 0.0D, forward.z);
 
-    return c <= 0.05D; // 5% threshold
+    if (horizontalMovement.lengthSqr() < 1.0E-7D || horizontalForward.lengthSqr() < 1.0E-7D) {
+      return false;
+    }
+
+    return horizontalMovement.normalize().dot(horizontalForward.normalize()) >= 0.99D;
   }
 
   @Unique

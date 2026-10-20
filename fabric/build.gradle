@@ -19,6 +19,9 @@ dependencies {
     include 'com.electronwill.night-config:toml:3.6.0'
 
     modImplementation 'maven.modrinth:monolib:fabric-1.20.1-4.1.2'
+
+    modImplementation 'maven.modrinth:vanillabackport:qE607Sw1'
+    modImplementation 'maven.modrinth:platform:ludrMJBy'
 }
 
 loom {

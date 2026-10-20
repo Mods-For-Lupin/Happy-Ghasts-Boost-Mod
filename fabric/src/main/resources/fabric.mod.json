@@ -31,7 +31,8 @@
     "fabric": "*",
     "minecraft": "${fabric_minecraft_version_range}",
     "java": ">=17",
-    "monolib": "*"
+    "monolib": "*",
+    "vanillabackport": "*"
   },
   "suggests": {
     "another-mod": "*"

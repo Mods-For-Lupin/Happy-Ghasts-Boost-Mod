@@ -2,6 +2,7 @@ package io.github.jason13official.happy_ghasts_boost.platform;
 
 import io.github.jason13official.happy_ghasts_boost.platform.services.IPlatformHelper;
 import java.nio.file.Path;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -29,5 +30,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
   public Path getGameDirectory() {
 
     return FMLLoader.getGamePath();
+  }
+
+  @Override
+  public boolean isClientSide() {
+
+    return FMLLoader.getDist() == Dist.CLIENT;
   }
 }

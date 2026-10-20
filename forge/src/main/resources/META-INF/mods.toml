@@ -34,3 +34,10 @@ issueTrackerURL="${mod_url}/issues" #optional
     versionRange = "[0,)"
     ordering = "NONE"
     side = "BOTH"
+
+[[dependencies.${mod_id}]]
+    modId = "vanillabackport"
+    mandatory = true
+    versionRange = "[1.2,)"
+    ordering = "AFTER"
+    side = "BOTH"

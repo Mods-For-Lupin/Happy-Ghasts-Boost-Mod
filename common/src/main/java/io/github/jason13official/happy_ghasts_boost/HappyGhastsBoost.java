@@ -8,7 +8,7 @@ public class HappyGhastsBoost {
 
   public static void init() {
 
-    Sailing.register(Constants.MOD_ID, MonoLib.createFilename(Constants.MOD_ID, "1.20.1", "1.0.0"));
+    Sailing.register(Constants.MOD_ID, MonoLib.createFilename(Constants.MOD_ID, "1.20.1", "1.2.0"));
   }
 
   public static ResourceLocation identifier(final String path) {

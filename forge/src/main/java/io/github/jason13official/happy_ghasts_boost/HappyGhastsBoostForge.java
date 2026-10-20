@@ -1,5 +1,6 @@
 package io.github.jason13official.happy_ghasts_boost;
 
+import io.github.jason13official.happy_ghasts_boost.impl.common.EarlyLoadConfig;
 import java.util.function.Consumer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
@@ -47,7 +48,7 @@ public class HappyGhastsBoostForge {
 
     @Override
     protected void apply(Void unused, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-      // ModConfig.load(Services.PLATFORM.getConfigDirectory());
+      EarlyLoadConfig.createOrLoadConfiguration();
     }
 
     @Override

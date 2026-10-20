@@ -5,6 +5,9 @@ plugins {
 
 dependencies {
   compileOnly project(":common")
+
+  implementation 'maven.modrinth:monolib:forge-1.20.1-4.1.2'
+
   annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
   compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.4"))
   jarJar(implementation("io.github.llamalad7:mixinextras-forge:0.5.4")) {

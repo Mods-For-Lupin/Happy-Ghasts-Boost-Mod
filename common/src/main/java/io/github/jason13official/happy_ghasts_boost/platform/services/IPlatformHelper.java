@@ -42,4 +42,6 @@ public interface IPlatformHelper {
 
     return getGameDirectory().resolve("config");
   }
+
+  boolean isClientSide();
 }

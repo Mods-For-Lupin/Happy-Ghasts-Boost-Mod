@@ -2,6 +2,7 @@ package io.github.jason13official.happy_ghasts_boost.platform;
 
 import io.github.jason13official.happy_ghasts_boost.platform.services.IPlatformHelper;
 import java.nio.file.Path;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FabricPlatformHelper implements IPlatformHelper {
@@ -28,5 +29,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
   public Path getGameDirectory() {
 
     return FabricLoader.getInstance().getGameDir();
+  }
+
+  @Override
+  public boolean isClientSide() {
+
+    return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
   }
 }

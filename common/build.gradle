@@ -12,6 +12,10 @@ dependencies {
   compileOnly 'com.electronwill.night-config:toml:3.6.0'
 
   implementation 'monolib:monolib-common:1.21.1-4.1.0'
+
+  compileOnly "org.ow2.asm:asm-tree:9.5"
+
+  compileOnly 'maven.modrinth:vanillabackport:65ke2Krk'
 }
 
 neoForge {

@@ -6,6 +6,9 @@ plugins {
 dependencies {
 
   implementation 'maven.modrinth:monolib:neoforge-1.21.1-4.1.2'
+
+  implementation 'maven.modrinth:vanillabackport:65ke2Krk'
+  implementation 'maven.modrinth:platform:m6VuG10s'
 }
 
 neoForge {

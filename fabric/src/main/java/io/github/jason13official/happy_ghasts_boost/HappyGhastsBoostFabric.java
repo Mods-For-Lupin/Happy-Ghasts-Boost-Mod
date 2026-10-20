@@ -1,5 +1,6 @@
 package io.github.jason13official.happy_ghasts_boost;
 
+import io.github.jason13official.happy_ghasts_boost.impl.common.EarlyLoadConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
@@ -26,7 +27,7 @@ public class HappyGhastsBoostFabric implements ModInitializer {
 
     @Override
     public void onResourceManagerReload(ResourceManager resourceManager) {
-      // ModConfig.load(Services.PLATFORM.getConfigDirectory());
+      EarlyLoadConfig.createOrLoadConfiguration();
     }
   }
 }

@@ -6,7 +6,8 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "HappyGhastMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "ThrownPotionMixin"
   ],
   "client": [
     "MinecraftMixin"

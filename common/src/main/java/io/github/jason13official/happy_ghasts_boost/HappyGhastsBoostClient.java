@@ -3,7 +3,9 @@ package io.github.jason13official.happy_ghasts_boost;
 import com.blackgear.vanillabackport.common.level.entities.mob.animal.happy_ghast.HappyGhast;
 import io.github.jason13official.happy_ghasts_boost.api.common.IHappyGhastBoostDataHolder;
 import io.github.jason13official.happy_ghasts_boost.impl.common.EarlyLoadConfig;
+import java.util.Locale;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
@@ -40,6 +42,18 @@ public class HappyGhastsBoostClient {
           guiGraphics.blit(HappyGhastsBoost.identifier("textures/gui/icons_copy.png"), xStart, yStart, (float) 0, (float) 89, displayWidth, 5, 256, 256);
         }
       }
+
+      if (EarlyLoadConfig.DEBUG.get()) {
+
+        float blocksPerSecond = (float) ghast.getDeltaMovement().length() * 20.0f;
+        topSpeedOnGhast = Math.max(topSpeedOnGhast, blocksPerSecond);
+
+        Font font = Minecraft.getInstance().font;
+        guiGraphics.drawString(font, String.format(Locale.ROOT, "Speed: %.2f blocks/s", blocksPerSecond), 4, 4, 0xFFFFFFFF);
+        guiGraphics.drawString(font, String.format(Locale.ROOT, "Top Speed: %.2f blocks/s", topSpeedOnGhast), 4, 5 + font.lineHeight, 0xFFFFFFFF);
+      }
+    } else {
+      topSpeedOnGhast = 0.0f;
     }
   }
 }

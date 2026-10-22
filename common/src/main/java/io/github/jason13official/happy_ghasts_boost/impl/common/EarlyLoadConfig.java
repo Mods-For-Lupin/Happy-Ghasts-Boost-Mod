@@ -31,6 +31,9 @@ public class EarlyLoadConfig implements IMixinConfigPlugin {
   private static boolean displayBoostBar = true;
   public static Commented<Boolean> DISPLAY_BOOST_BAR = new Commented<>("display_boost_bar", () -> displayBoostBar, value -> displayBoostBar = value, "Whether to display the boost bar.");
 
+  private static boolean debug = false;
+  public static Commented<Boolean> DEBUG = new Commented<>("debug", () -> debug, value -> debug = value, "Whether to display the current and top speed while riding a Happy Ghast.");
+
   @Override
   public void onLoad(String mixinPackage) {
 
@@ -132,10 +135,13 @@ public class EarlyLoadConfig implements IMixinConfigPlugin {
 
       // getters (from clientConfig)
       DISPLAY_BOOST_BAR.set(clientConfig.getOrElse(DISPLAY_BOOST_BAR.key(), DISPLAY_BOOST_BAR.get()));
+      DEBUG.set(clientConfig.getOrElse(DEBUG.key(), DEBUG.get()));
 
       // setters (to clientConfig)
       clientConfig.setComment(DISPLAY_BOOST_BAR.key(), DISPLAY_BOOST_BAR.comment());
       clientConfig.set(DISPLAY_BOOST_BAR.key(), DISPLAY_BOOST_BAR.get());
+      clientConfig.setComment(DEBUG.key(), DEBUG.comment());
+      clientConfig.set(DEBUG.key(), DEBUG.get());
 
       clientConfig.save();
     } catch (Exception e) {
